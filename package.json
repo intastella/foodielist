@@ -1,0 +1,16 @@
+{
+  "name": "foodieList",
+  "version": "0.0.1",
+  "description": "Foodie List",
+  "repository": "//FlexWeb/",
+  "homepage": "http://gdcqawebux201.nextestate.com/",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-jade": "^0.15.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-newer": "^1.1.1",
+    "jstransformer-verbatim": "^1.0.0"
+  }
+}
