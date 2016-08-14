@@ -1,0 +1,21 @@
+{
+  "name": "foodielist",
+  "version": "0.0.1",
+  "description": "FoodieList",
+  "authors": [
+    "Don Osborne"
+  ],
+  "license": "UNLICENSED",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "3.1.0",
+    "sanitize-css": "3.0.0",
+    "compass-breakpoint": "~2.7.0"
+  }
+}

@@ -2,15 +2,25 @@
   "name": "foodieList",
   "version": "0.0.1",
   "description": "Foodie List",
-  "repository": "//FlexWeb/",
-  "homepage": "http://gdcqawebux201.nextestate.com/",
+  "repository": "https://github.com/intastella/foodielist.git",
+  "homepage": "humanfriendlydesign.com",
   "license": "UNLICENSED",
   "private": true,
   "devDependencies": {
+    "autoprefixer": "^6.3.6",
     "grunt": "^1.0.1",
-    "grunt-contrib-jade": "^0.15.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-newer": "^1.1.1",
-    "jstransformer-verbatim": "^1.0.0"
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-jade": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-modernizr": "^1.0.2",
+    "grunt-newer": "^1.2.0",
+    "grunt-postcss": "^0.8.0",
+    "grunt-sass": "^1.2.0",
+    "postcss-focus": "^1.0.0",
+    "postcss-reporter": "^1.3.3"
   }
 }
