@@ -13,9 +13,13 @@ html(lang='en')
     body
       main.page-main
         .search
-          input.search__input(placeholder="Search")
+          input.search__input#autocomplete(placeholder="Search")
           
         .search-map#map
+        
+        .schedule
+          .schedule__placeholder No schedule set
+          ul.schedule__list
           
         .search-results
           ul.search-results__list
