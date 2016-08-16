@@ -9,29 +9,28 @@
     <script src="js/foodielist.js"></script>
     <script src="https://use.fontawesome.com/c46c5b9311.js"></script>
     <body>
-      <main class="app-container">
-        <div class="search toolbar">
-          <div class="search__input"><i aria-hidden="true" class="fa fa-search search__input-icon"></i>
-            <input id="search-input-field" placeholder="Find Restaurants by Location" class="search__input-field">
+      <div class="search">
+        <div class="search__header toolbar">
+          <div class="search__header-input"><i aria-hidden="true" class="fa fa-search search__header-input-icon"></i>
+            <input id="search-input-field" placeholder="Find Restaurants by Location" class="search__header-input-field">
           </div>
-          <button class="search__schedule-button"><i aria-label="View My Schedule" class="fa fa-calendar"></i></button>
+          <button class="search__header-schedule-button"><i aria-label="View My Schedule" class="fa fa-calendar"></i></button>
         </div>
-        <div id="map" class="search-map"></div>
+        <div id="map" class="search-map">
+          <div class="search-map__loading"> <i aria-hidden="true" class="fa fa-circle-o-notch fa-spin"></i>Getting Location</div>
+        </div>
         <div class="search-results">
           <ul class="search-results__list"></ul>
-          <div class="search-results__footer">
-            <button class="search-results__show-more">Show More</button>
-          </div>
         </div>
-        <div class="schedule">
-          <div class="schedule__header toolbar"><i aria-hidden="true" class="fa fa-calendar schedule__header-calendar"></i>
-            <div class="schedule__header-title">My Schedule</div>
-            <button class="schedule__header-close"><i aria-label="Close My Schedule" class="fa fa-close"></i></button>
-          </div>
-          <div class="schedule__placeholder">No schedule set</div>
-          <ul class="schedule__list"></ul>
+      </div>
+      <div class="schedule">
+        <div class="schedule__header toolbar"><i aria-hidden="true" class="fa fa-calendar schedule__header-calendar"></i>
+          <div class="schedule__header-title">My Schedule</div>
+          <button class="schedule__header-close"><i aria-label="Close My Schedule" class="fa fa-close"></i></button>
         </div>
-      </main>
+        <div class="schedule__placeholder">No schedule set</div>
+        <ul class="schedule__list"></ul>
+      </div>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABMZNCMxM-b-CJsBAhKzNpzHhcCPIVF8Y&amp;libraries=places"></script>
     </body>
   </head>

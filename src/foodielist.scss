@@ -8,6 +8,7 @@ $black: #000;
 $page-bg-color: white;
 $primary-color: #4A90E2;
 $primary-text-color: #222222;
+$selection-bg-color: lighten($primary-color, 40%);
 $border-color: #e0e0e0;
 
 @import '../node_modules/flexwebcore/src/scss/flexwebcore/core/_all-core.scss';
@@ -32,6 +33,11 @@ body {
   @include font-light;
 }
 
+::selection {
+	background-color: $selection-bg-color; // sanitize override
+  color: $primary-text-color; // sanitize override
+}
+
 ul {
   @include unstyled;
 }
@@ -45,7 +51,14 @@ button {
   @include hidden;
 }
 
-.app-container {
+.toolbar {
+  @include flex;
+  @include full-width;
+  padding: 0.5em;
+  height: 60px;
+}
+
+.search {
   @include flex;
   @include flex-vertical;  
   @include full-width;
@@ -56,31 +69,24 @@ button {
 
 }
 
-.toolbar {
-  @include flex;
-  @include full-width;
-  padding: 0.5em;
-  height: 60px;
-}
-
-.search {
+.search__header {
   @include flex-fixed;
   background-color: $primary-color;
 }
 
-.search__input {
+.search__header-input {
   @include flex;
   @include flex-fluid;
   @include bordered;
   @include full-width;
-  @include type-h4(300);
   @include bg-color-white;
+  font-size: $type-18;
   border-radius: $border-radius-lg;
   padding: 0.5em 0.7em;
   // box-shadow: 0 1px 5px rgba(0,0,0,0.2);
 }
 
-.search__input-icon {
+.search__header-input-icon {
   @include flex-fixed;
   @include relative;
   margin-right: 0.5em;
@@ -88,14 +94,14 @@ button {
   color: #CCC;
 }
 
-.search__input-field {
+.search__header-input-field {
   @include flex-fluid;
   &:focus {
   	outline: none;
 	}
 }
 
-.search__schedule-button {
+.search__header-schedule-button {
   @include flex-fixed;
   padding-left: 0.7em;
   padding-right: 0.3em;
@@ -109,7 +115,19 @@ button {
 .search-map {
   @include flex-fixed;
   @include full-width;
+  @include flex;
+  background-color: #f7f7f7;
+  justify-content: center;
+  align-items: center;
   height: 12.5em; //200px
+}
+
+.search-map__loading {
+  color: #808080;
+  
+  i {
+    margin-right: 0.5em;
+  }
 }
 
 .search-results {
@@ -119,18 +137,13 @@ button {
 
 .search-results__list {
   @include border-top;
-  @include border-bottom;
 }
 
 .search-results__list-item,
 .schedule__list-item {
   @include flex;
   @include padded(1);
-  @include border-top;
-  
-  &:first-child {
-    border-top: 0;
-  }
+  @include border-bottom;
   
   &:nth-child(odd) {
     background-color: #f7f7f7;
@@ -261,6 +274,8 @@ button {
   @include full-width;
   @include full-height;
   @include overflow-x-hidden-scroll-y;
+  top: 0;
+  left: 0;
   background-color: #f7f7f7;
   transition: transform $default-transition;
   transform: translateY(100%);

@@ -10074,30 +10074,98 @@ return jQuery;
 } );
 
 $(document).ready(function() {
-  var location = {lat: 34.123123, lng: -118.174470};
+  var defaultLocation = {lat: 37.293042, lng: -121.934290}; // ID TECH
+  var geolocation;
+  var autocomplete;
+  var searchPlace;
+  var searchMap;
   var paginationButtonVisible = false;
   
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: location,
-    zoom: 15,
-    disableDefaultUI: true
-  });
+  function geolocate() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        geolocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        var circle = new google.maps.Circle({
+          center: geolocation,
+          radius: position.coords.accuracy
+        });
+        autocomplete.setBounds(circle.getBounds());
+        initDefaultMap();
+      }, geoErrors);
+    }
+  }
   
-  function displayMap() {
+  function geoErrors(error) {
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        initDefaultMap();
+        break;
+      case error.POSITION_UNAVAILABLE:
+        initDefaultMap();
+        break;
+      case error.TIMEOUT:
+        initDefaultMap();
+        break;
+      case error.UNKNOWN_ERROR:
+        initDefaultMap();
+        break;
+    }
+  }
+  
+  function initDefaultMap() {
+    if (geolocation === undefined) {
+      geolocation = defaultLocation;
+    }
+    
+    // Default Map
+    var defaultMap = new google.maps.Map(document.getElementById('map'), {
+      center: geolocation,
+      zoom: 15,
+      disableDefaultUI: true
+    });
+    
+    initSearch(geolocation);
+  }
+  
+  function initAutocomplete() {
+    autocomplete = new google.maps.places.Autocomplete(document.getElementById('search-input-field'), {
+      types: ['geocode']
+    });
+    
+    autocomplete.addListener('place_changed', getPlaceAndSearch);
+  }
+  
+  function getPlaceAndSearch() {
+    searchPlace = autocomplete.getPlace();
+    initSearch(searchPlace.geometry.location);
+  }
+  
+  function initSearch(LatLng) {
+    searchMap = new google.maps.Map(document.getElementById('map'), {
+      center: LatLng,
+      zoom: 10,
+      disableDefaultUI: true
+    });
+    
     var searchRequest = {
-      location: location,
+      location: LatLng,
       radius: '10000',
       type: 'restaurant'
     };
     
-    var service = new google.maps.places.PlacesService(map);
+    var service = new google.maps.places.PlacesService(searchMap);
     service.nearbySearch(searchRequest, getResults);
   }
   
   function getResults(results, status, pagination) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
+      $('.search-results__list').empty();
+      
       if (pagination.hasNextPage) {
-        pagination.nextPage();
+        // pagination.nextPage();
         paginationButtonVisible = true;
       }
       
@@ -10107,7 +10175,7 @@ $(document).ready(function() {
           placeId: results[i].place_id
         };
         
-        service = new google.maps.places.PlacesService(map);
+        service = new google.maps.places.PlacesService(searchMap);
         service.getDetails(resultID, displayResults);
       }
     } else {
@@ -10117,7 +10185,17 @@ $(document).ready(function() {
   
   function displayResults(place, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
+      var name = "Name not available";
+      var rating = "Rating not available";
       var photo = "<i class='fa fa-camera search-results__list-item-image-icon'></i>";
+      
+      if (place.name !== undefined) {
+        name = place.name;
+      }
+      
+      if (place.rating !== undefined) {
+        rating = place.rating;
+      }
       
       if (place.photos !== undefined) {
         var photoURL = place.photos[0].getUrl({ 'maxWidth': 130, 'maxHeight': 130 });
@@ -10133,6 +10211,7 @@ $(document).ready(function() {
         var activeClass = " search-results__list-item-schedule-day--active";
         var activeMon = "";
         var activeTues = "";
+        var activeWed = "";
         var activeThur = "";
         var activeFri = "";
         var activeSat = "";
@@ -10179,8 +10258,8 @@ $(document).ready(function() {
           resultsItemTemplate += photo;
         resultsItemTemplate += "</div>";
         resultsItemTemplate += "<div class='search-results__list-item-info'>";
-          resultsItemTemplate += "<div class='search-results__list-item-title'>"+ place.name +"</div>";
-          resultsItemTemplate += "<div class='search-results__list-item-rating'>"+ place.rating +"</div>";
+          resultsItemTemplate += "<div class='search-results__list-item-title'>"+ name +"</div>";
+          resultsItemTemplate += "<div class='search-results__list-item-rating'>"+ rating +"</div>";
           resultsItemTemplate += "<div class='search-results__list-item-schedule'>"+ schedule +"</div>";
         resultsItemTemplate += "</div>";
         resultsItemTemplate += "<div class='search-results__list-item-action'>";
@@ -10232,41 +10311,10 @@ $(document).ready(function() {
     });
   }
   
-  
-  var autocomplete;
-
-  function initAutocomplete() {
-    autocomplete = new google.maps.places.Autocomplete(document.getElementById('search-input-field'), {
-      types: ['geocode']
-    });
-    
-    autocomplete.addListener('place_changed', fillInAddress);
-  }
-
-  function fillInAddress() {
-    var place = autocomplete.getPlace();
-  }
-  
-  function geolocate() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var geolocation = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        var circle = new google.maps.Circle({
-          center: geolocation,
-          radius: position.coords.accuracy
-        });
-        autocomplete.setBounds(circle.getBounds());
-      });
-    }
-  }
-  
-  displayMap();
+  geolocate();
   initAutocomplete();
   
-  $('.search__schedule-button').click(function() {
+  $('.search__header-schedule-button').click(function() {
     $('.schedule').addClass('schedule--active');
   });
   
@@ -10274,7 +10322,7 @@ $(document).ready(function() {
     $('.schedule').removeClass('schedule--active');
   });
   
-  $('#autocomplete').on('focus', function(){
-    geolocate();
-  });
+  // $('search-input-field').click(function(){
+  //   geolocate();
+  // });
 });
