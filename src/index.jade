@@ -5,24 +5,36 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title FoodieList
     link(rel='stylesheet', type='text/css', media="screen" href='css/foodielist.css')
-    link(href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet")
     
     
     script(src='js/foodielist.js')
+    script(src="https://use.fontawesome.com/c46c5b9311.js")
     
     body
-      main.page-main
-        .search
-          input.search__input#autocomplete(placeholder="Search")
+      main.app-container
+        .search.toolbar
+          .search__input
+            i.fa.fa-search.search__input-icon(aria-hidden="true")
+            input.search__input-field#search-input-field(placeholder="Find Restaurants by Location")
+          button.search__schedule-button
+            i.fa.fa-calendar(aria-label="View My Schedule")
           
         .search-map#map
         
-        .schedule
-          .schedule__placeholder No schedule set
-          ul.schedule__list
-          
         .search-results
           ul.search-results__list
+          .search-results__footer
+            button.search-results__show-more Show More
+          
+        .schedule
+          .schedule__header.toolbar
+            i.fa.fa-calendar.schedule__header-calendar(aria-hidden="true")
+            .schedule__header-title My Schedule
+            button.schedule__header-close
+              i.fa.fa-close(aria-label="Close My Schedule")
+          .schedule__placeholder No schedule set
+          ul.schedule__list
           
         
       script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyABMZNCMxM-b-CJsBAhKzNpzHhcCPIVF8Y&libraries=places')
