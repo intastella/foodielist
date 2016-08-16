@@ -93,6 +93,13 @@ module.exports = function(grunt) {
           ]
         }
       }
+    },
+    
+    jshint: {
+      build: [
+        'Gruntfile.js',
+        'src/**/*.js'
+      ]
     }
   });
   
@@ -104,7 +111,8 @@ module.exports = function(grunt) {
     'postcss'
   ]);
   grunt.registerTask('build:dev:js', [
-    'concat'
+    'concat',
+    'jshint'
   ]);
   
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -112,6 +120,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-postcss');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-newer');
   grunt.registerTask('default', ['build:dev']);
 
