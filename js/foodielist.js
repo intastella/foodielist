@@ -10170,7 +10170,7 @@ $(document).ready(function() {
       }
       
       for (var i = 0; i < results.length; i++) {
-        // console.log(results[i]);    
+        // console.log(results[i]);
         var resultID = {
           placeId: results[i].place_id
         };
@@ -10241,13 +10241,18 @@ $(document).ready(function() {
               break;
           }
         }
-        schedule += "<span class='search-results__list-item-schedule-day"+ activeMon +"'>M</span>"; 
-        schedule += "<span class='search-results__list-item-schedule-day"+ activeTues +"'>T</span>"; 
-        schedule += "<span class='search-results__list-item-schedule-day"+ activeWed +"'>W</span>"; 
-        schedule += "<span class='search-results__list-item-schedule-day"+ activeThur +"'>T</span>"; 
-        schedule += "<span class='search-results__list-item-schedule-day"+ activeFri +"'>F</span>"; 
-        schedule += "<span class='search-results__list-item-schedule-day"+ activeSat +"'>S</span>"; 
-        schedule += "<span class='search-results__list-item-schedule-day"+ activeSun +"'>S</span>"; 
+        
+        if (activeMon !== "" && activeTues !== "" && activeWed !== "" && activeThur !== "" && activeFri !== "" && activeSat !== "" && activeSun !== "") {
+          schedule = "Open every day";
+        } else {
+          schedule += "<span class='search-results__list-item-schedule-day"+ activeMon +"'>M</span>"; 
+          schedule += "<span class='search-results__list-item-schedule-day"+ activeTues +"'>T</span>"; 
+          schedule += "<span class='search-results__list-item-schedule-day"+ activeWed +"'>W</span>"; 
+          schedule += "<span class='search-results__list-item-schedule-day"+ activeThur +"'>T</span>"; 
+          schedule += "<span class='search-results__list-item-schedule-day"+ activeFri +"'>F</span>"; 
+          schedule += "<span class='search-results__list-item-schedule-day"+ activeSat +"'>S</span>"; 
+          schedule += "<span class='search-results__list-item-schedule-day"+ activeSun +"'>S</span>";
+        }
       } else {
         schedule = "Schedule Not Available";
       }
