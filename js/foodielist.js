@@ -10144,6 +10144,9 @@ $(document).ready(function() {
   }
   
   function initSearch(LatLng) {
+    $('.search-results__list').empty();
+    $('.search-results__loading').addClass('search-results__loading--visible');
+    
     searchMap = new google.maps.Map(document.getElementById('map'), {
       center: LatLng,
       zoom: 10,
@@ -10162,11 +10165,13 @@ $(document).ready(function() {
   
   function getResults(results, status, pagination) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-      $('.search-results__list').empty();
+    
       
       if (pagination.hasNextPage) {
-        // pagination.nextPage();
+        pagination.nextPage();
         paginationButtonVisible = true;
+      } else {
+        $('.search-results__loading').removeClass('search-results__loading--visible');
       }
       
       for (var i = 0; i < results.length; i++) {
@@ -10319,7 +10324,7 @@ $(document).ready(function() {
   geolocate();
   initAutocomplete();
   
-  $('.search__header-schedule-button').click(function() {
+  $('.search__schedule-button').click(function() {
     $('.schedule').addClass('schedule--active');
   });
   

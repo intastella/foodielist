@@ -371,10 +371,48 @@ button {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.search-results__list {
-  border-top: 1px solid #e0e0e0;
+.search-results__loading {
+  display: none;
+  padding: 30px;
+  text-align: center;
+  color: #808080;
+}
+
+.search-results__loading--visible {
+  display: block;
+}
+
+.search-results__loading i {
+  margin-right: 0.5em;
+}
+
+.search__schedule-button {
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+  padding: 10px;
+  text-align: center;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #4A90E2;
+}
+
+@media (min-width: 71.5em) {
+  .search__schedule-button {
+    font-size: 1.125em;
+    line-height: 1.666666667;
+  }
+}
+
+.search__schedule-button:hover, .search__schedule-button:focus {
+  color: #2275d7;
+}
+
+.search__schedule-button i {
+  margin-right: 0.5em;
 }
 
 .search-results__list-item,
@@ -382,7 +420,12 @@ button {
   display: -ms-flexbox;
   display: flex;
   padding: 10px;
-  border-bottom: 1px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
+}
+
+.search-results__list-item:first-child,
+.schedule__list-item:first-child {
+  border-top: 0;
 }
 
 .search-results__list-item:nth-child(odd),
@@ -393,33 +436,6 @@ button {
 .search-results__list-item:nth-child(odd) .search-results__list-item-image,
 .schedule__list-item:nth-child(odd) .search-results__list-item-image {
   background-color: #FFF;
-}
-
-.search-results__footer {
-  padding: 10px;
-}
-
-.search-results__show-more {
-  display: none;
-  width: 100%;
-  background-color: #FFF;
-  font-size: 0.875em;
-  line-height: 1.428571429;
-  padding: 0.25em 1em;
-  border: 1px solid #4A90E2;
-  color: #4A90E2;
-  border-radius: 4px;
-}
-
-@media (min-width: 71.5em) {
-  .search-results__show-more {
-    font-size: 1em;
-    line-height: 1.5;
-  }
-}
-
-.search-results__show-more--visible {
-  display: block;
 }
 
 .search-results__list-item-image {
@@ -606,6 +622,10 @@ button {
       flex: 0 0 auto;
   text-align: center;
   width: 1.6em;
+}
+
+.schedule__header-close:hover, .schedule__header-close:focus {
+  color: #2275d7;
 }
 
 .schedule__header-close i {

@@ -133,17 +133,50 @@ button {
 .search-results {
   @include flex-fluid;
   @include overflow-x-hidden-scroll-y;
+  @include border-top;
+  @include border-bottom;
 }
 
-.search-results__list {
-  @include border-top;
+.search-results__loading  {
+  @include hidden;
+  @include padded(3);
+  @include align-center;
+  color: #808080;
+  
+  &--visible {
+    @include block;
+  }
+  
+  i {
+    margin-right: 0.5em;
+  }
+}
+
+.search__schedule-button {
+  @include flex-fixed;
+  @include padded;
+  @include align-center;
+  @include type-default;
+  color: $primary-color;
+  
+  &:hover {
+    color: darken($primary-color, 10%);
+  }
+  
+  i {
+    margin-right: 0.5em;
+  }
 }
 
 .search-results__list-item,
 .schedule__list-item {
   @include flex;
   @include padded(1);
-  @include border-bottom;
+  @include border-top;
+  
+  &:first-child {
+    border-top: 0;
+  }
   
   &:nth-child(odd) {
     background-color: #f7f7f7;
@@ -151,25 +184,6 @@ button {
     .search-results__list-item-image {
       @include bg-color-white;
     }
-  }
-}
-
-.search-results__footer {
-  @include padded(1);
-}
-
-.search-results__show-more {
-  @include hidden;
-  @include full-width;
-  @include bg-color-white;
-  @include type-small;
-  padding: 0.25em 1em;
-  border: 1px solid $primary-color;
-  color: $primary-color;
-  border-radius: $border-radius-lg;
-  
-  &--visible {
-    @include block;
   }
 }
 
@@ -308,6 +322,10 @@ button {
   @include flex-fixed;
   @include align-center;
   width: 1.6em;
+  
+  &:hover {
+    color: darken($primary-color, 10%);
+  }
   
   i {
     font-size: 1.3em;

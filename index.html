@@ -14,18 +14,19 @@
           <div class="search__header-input"><i aria-hidden="true" class="fa fa-search search__header-input-icon"></i>
             <input id="search-input-field" placeholder="Find Restaurants by Location" class="search__header-input-field">
           </div>
-          <button class="search__header-schedule-button"><i aria-label="View My Schedule" class="fa fa-calendar"></i></button>
         </div>
         <div id="map" class="search-map">
-          <div class="search-map__loading"> <i aria-hidden="true" class="fa fa-circle-o-notch fa-spin"></i>Getting Location</div>
+          <div class="search-map__loading"> <i aria-hidden="true" class="fa fa-circle-o-notch fa-spin"></i>Loading Location</div>
         </div>
         <div class="search-results">
           <ul class="search-results__list"></ul>
+          <div class="search-results__loading search-results__loading--visible"><i aria-hidden="true" class="fa fa-circle-o-notch fa-spin"></i>Loading Restaurants</div>
         </div>
+        <button class="search__schedule-button"><i aria-hidden="true" class="fa fa-calendar"></i>View Schedule</button>
       </div>
       <div class="schedule">
         <div class="schedule__header toolbar"><i aria-hidden="true" class="fa fa-calendar schedule__header-calendar"></i>
-          <div class="schedule__header-title">My Schedule</div>
+          <div class="schedule__header-title">Schedule</div>
           <button class="schedule__header-close"><i aria-label="Close My Schedule" class="fa fa-close"></i></button>
         </div>
         <div class="schedule__placeholder">No schedule set</div>

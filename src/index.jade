@@ -17,23 +17,28 @@ html(lang='en')
           .search__header-input
             i.fa.fa-search.search__header-input-icon(aria-hidden="true")
             input.search__header-input-field#search-input-field(placeholder="Find Restaurants by Location")
-          button.search__header-schedule-button
-            i.fa.fa-calendar(aria-label="View My Schedule")
+          //- button.search__header-schedule-button
+          //-   i.fa.fa-calendar(aria-label="View My Schedule")
           
         .search-map#map
           .search-map__loading 
             i.fa.fa-circle-o-notch.fa-spin(aria-hidden="true")
-            | Getting Location
+            | Loading Location
         
         .search-results
           ul.search-results__list
-          //- .search-results__footer
-          //-   button.search-results__show-more Show More
+          .search-results__loading.search-results__loading--visible
+            i.fa.fa-circle-o-notch.fa-spin(aria-hidden="true")
+            | Loading Restaurants
+            
+        button.search__schedule-button
+          i.fa.fa-calendar(aria-hidden="true")
+          | View Schedule
           
       .schedule
         .schedule__header.toolbar
           i.fa.fa-calendar.schedule__header-calendar(aria-hidden="true")
-          .schedule__header-title My Schedule
+          .schedule__header-title Schedule
           button.schedule__header-close
             i.fa.fa-close(aria-label="Close My Schedule")
         .schedule__placeholder No schedule set
