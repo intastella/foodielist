@@ -2,7 +2,8 @@
   @include fixed;
   @include full-width;
   @include full-height;
-  @include overflow-x-hidden-scroll-y;
+  @include flex;
+  @include flex-vertical;
   @include bg-color-white;
   top: 0;
   left: 0;
@@ -16,7 +17,9 @@
 
 .schedule__header {
   @include flex;
+  @include flex-fixed;
   @include bg-color-white;
+  @include border-bottom;
   @include type-color-primary;
   font-size: 1.5em;
 }
@@ -46,6 +49,11 @@
   }
 }
 
+.schedule__list {
+  @include flex-fluid;
+  @include overflow-x-hidden-scroll-y;
+}
+
 .schedule__list-item {
   .modal__place & {
     @include double-pad-left;
@@ -55,11 +63,15 @@
 }
 
 .schedule__list-day {
+  @include border-top;
   min-height: 6.875em;
+  
+  &:first-child {
+    border-top: 0;
+  }
 }
 
 .schedule__list-day-title {
-  @include border-top;
   @include border-bottom;
   @include pad-left;
   @include pad-right;

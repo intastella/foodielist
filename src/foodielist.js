@@ -138,8 +138,6 @@ $(document).ready(function() {
         var ratingDigits = roundedRating.split(".");
         var wholeStars = "";
         var halfStars = "";
-        console.log(ratingDigits[0] + " " + ratingDigits[1]);
-        // console.log(ratingDigits[1]);
         for (var w = 0; w < ratingDigits[0]; w++) {
           wholeStars += "<i class='fa fa-star' aria-hidden='true'></i>";
         }
