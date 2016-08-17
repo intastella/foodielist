@@ -22,16 +22,74 @@
           <ul class="search-results__list"></ul>
           <div class="search-results__loading search-results__loading--visible"><i aria-hidden="true" class="fa fa-circle-o-notch fa-spin"></i>Loading Restaurants</div>
         </div>
-        <button class="search__schedule-button"><i aria-hidden="true" class="fa fa-calendar"></i>View Schedule</button>
+        <button class="search__schedule-button">
+          <div class="search__schedule-button-inner"><i aria-hidden="true" class="fa fa-calendar"></i>View Schedule</div>
+        </button>
       </div>
-      <div class="schedule">
+      <div class="schedule schedule--filled">
         <div class="schedule__header toolbar"><i aria-hidden="true" class="fa fa-calendar schedule__header-calendar"></i>
           <div class="schedule__header-title">Schedule</div>
-          <button class="schedule__header-close"><i aria-label="Close My Schedule" class="fa fa-close"></i></button>
+          <button class="schedule__header-close"><i aria-label="Close Schedule" class="fa fa-close"></i></button>
         </div>
-        <div class="schedule__placeholder">No schedule set</div>
-        <ul class="schedule__list"></ul>
+        <ul class="schedule__list">
+          <div class="schedule__list-day schedule__list-day--mon">
+            <div class="schedule__list-day-title">Monday</div>
+          </div>
+          <div class="schedule__list-day schedule__list-day--tues">
+            <div class="schedule__list-day-title">Tuesday</div>
+          </div>
+          <div class="schedule__list-day schedule__list-day--wed">
+            <div class="schedule__list-day-title">Wednesday</div>
+          </div>
+          <div class="schedule__list-day schedule__list-day--thur">
+            <div class="schedule__list-day-title">Thursday</div>
+          </div>
+          <div class="schedule__list-day schedule__list-day--fri">
+            <div class="schedule__list-day-title">Friday</div>
+          </div>
+          <div class="schedule__list-day schedule__list-day--sat">
+            <div class="schedule__list-day-title">Saturday</div>
+          </div>
+          <div class="schedule__list-day schedule__list-day--sun">
+            <div class="schedule__list-day-title">Sunday</div>
+          </div>
+        </ul>
       </div>
+      <div class="modal modal--small">
+        <div class="modal__inner">
+          <header class="modal__header">
+            <div class="modal__header-title">Schedule this restaurant</div>
+            <button class="modal__close"><i aria-label="Cancel scheduling" class="fa fa-close"></i></button>
+          </header>
+          <div class="modal__place"></div>
+          <div class="modal__content">
+            <ul class="modal__list">
+              <li class="modal__list-item"> 
+                <button data-target-day="mon" class="modal__list-item-button">Monday</button>
+              </li>
+              <li class="modal__list-item"> 
+                <button data-target-day="tues" class="modal__list-item-button">Tuesday</button>
+              </li>
+              <li class="modal__list-item"> 
+                <button data-target-day="wed" class="modal__list-item-button">Wednesday</button>
+              </li>
+              <li class="modal__list-item"> 
+                <button data-target-day="thur" class="modal__list-item-button">Thursday</button>
+              </li>
+              <li class="modal__list-item"> 
+                <button data-target-day="fri" class="modal__list-item-button">Friday</button>
+              </li>
+              <li class="modal__list-item"> 
+                <button data-target-day="sat" class="modal__list-item-button">Saturday</button>
+              </li>
+              <li class="modal__list-item"> 
+                <button data-target-day="sun" class="modal__list-item-button">Sunday</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-background"></div>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABMZNCMxM-b-CJsBAhKzNpzHhcCPIVF8Y&amp;libraries=places"></script>
     </body>
   </head>

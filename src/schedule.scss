@@ -1,0 +1,72 @@
+.schedule {
+  @include fixed;
+  @include full-width;
+  @include full-height;
+  @include overflow-x-hidden-scroll-y;
+  @include bg-color-white;
+  top: 0;
+  left: 0;
+  transition: transform $default-transition;
+  transform: translateY(100%);
+  
+  &--active {
+    transform: translateY(0);
+  }
+}
+
+.schedule__header {
+  @include flex;
+  @include bg-color-white;
+  @include type-color-primary;
+  font-size: 1.5em;
+}
+
+.schedule__header-calendar {
+  @include flex-fixed;
+  font-size: 1.4em !important;
+}
+
+.schedule__header-title {
+  @include flex-fluid;
+  margin-left: 0.5em;
+  line-height: 1.3;
+}
+
+.schedule__header-close {
+  @include flex-fixed;
+  @include align-center;
+  width: 1.6em;
+  
+  &:hover {
+    color: darken($primary-color, 10%);
+  }
+  
+  i {
+    font-size: 1.3em;
+  }
+}
+
+.schedule__list-item {
+  .modal__place & {
+    @include double-pad-left;
+    @include double-pad-right;
+    background-color: #f7f7f7;
+  }
+}
+
+.schedule__list-day {
+  min-height: 6.875em;
+}
+
+.schedule__list-day-title {
+  @include border-top;
+  @include border-bottom;
+  @include pad-left;
+  @include pad-right;
+  @include font-regular;
+  @include type-xsmall;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  background-color: #f7f7f7;
+}
+

@@ -10079,7 +10079,9 @@ $(document).ready(function() {
   var autocomplete;
   var searchPlace;
   var searchMap;
-  var paginationButtonVisible = false;
+  var resultsItem;
+  var modalObject;
+  var scheduleItemHTML;
   
   function geolocate() {
     if (navigator.geolocation) {
@@ -10169,7 +10171,6 @@ $(document).ready(function() {
       
       if (pagination.hasNextPage) {
         pagination.nextPage();
-        paginationButtonVisible = true;
       } else {
         $('.search-results__loading').removeClass('search-results__loading--visible');
       }
@@ -10210,8 +10211,9 @@ $(document).ready(function() {
         }
       }
       
-      var schedule = "";
-
+      var schedule = "Open: ";
+      var scheduleAllDays = false;
+      
       if (place.opening_hours !== undefined) {
         var activeClass = " search-results__list-item-schedule-day--active";
         var activeMon = "";
@@ -10222,32 +10224,36 @@ $(document).ready(function() {
         var activeSat = "";
         var activeSun = "";
         for (var i = 0; i < place.opening_hours.periods.length; i++) {
-          switch (place.opening_hours.periods[i].open.day) {
-            case 0:
-              activeMon = activeClass;
-              break;
-            case 1:
-              activeTues = activeClass;
-              break;
-            case 2:
-              activeWed = activeClass;
-              break;
-            case 3:
-              activeThur = activeClass;
-              break;
-            case 4:
-              activeFri = activeClass;
-              break;
-            case 5:
-              activeSat = activeClass;
-              break;
-            case 6:
-              activeSun = activeClass;
-              break;
+          if (place.opening_hours.periods[i].open.day === 0 && place.opening_hours.periods[i].open.time === '0000') {
+            scheduleAllDays = true;
+          } else {
+            switch (place.opening_hours.periods[i].open.day) {
+              case 0:
+                activeMon = activeClass;
+                break;
+              case 1:
+                activeTues = activeClass;
+                break;
+              case 2:
+                activeWed = activeClass;
+                break;
+              case 3:
+                activeThur = activeClass;
+                break;
+              case 4:
+                activeFri = activeClass;
+                break;
+              case 5:
+                activeSat = activeClass;
+                break;
+              case 6:
+                activeSun = activeClass;
+                break;
+            }
           }
         }
         
-        if (activeMon !== "" && activeTues !== "" && activeWed !== "" && activeThur !== "" && activeFri !== "" && activeSat !== "" && activeSun !== "") {
+        if ((activeMon !== "" && activeTues !== "" && activeWed !== "" && activeThur !== "" && activeFri !== "" && activeSat !== "" && activeSun !== "") || scheduleAllDays === true) {
           schedule = "Open every day";
         } else {
           schedule += "<span class='search-results__list-item-schedule-day"+ activeMon +"'>M</span>"; 
@@ -10263,7 +10269,7 @@ $(document).ready(function() {
       }
       
       var resultsItemTemplate = "";
-      resultsItemTemplate += "<li class='search-results__list-item'>";
+      resultsItemTemplate += "<li class='search-results__list-item' data-place-id='+"+ place.place_id +"'>";
         resultsItemTemplate += "<div class='search-results__list-item-image'>";
           resultsItemTemplate += photo;
         resultsItemTemplate += "</div>";
@@ -10283,41 +10289,51 @@ $(document).ready(function() {
       resultsItemTemplate += "</li>";
       
       $('.search-results__list').append(resultsItemTemplate);
-      if (paginationButtonVisible === true) {
-        $('.search-results__show-more').addClass('search-results__show-more--visible');
-      }
-      bindButtons();
+      bindAddButtons();
     } else {
       return;
     }
   }
   
-  function unbindButtons() {
+  function unbindAddButtons() {
     $('.search-results__list-item-button--add').off('click');
   }
   
-  function bindButtons() {
-    unbindButtons();
+  function bindAddButtons() {
+    unbindAddButtons();
     
-    $('.search-results__list-item-button').on('click', function() {
+    $('.search-results__list-item-button--add').on('click', function() {
+      resultsItem = $(this).closest('.search-results__list-item');
+      var resultItemPlaceID = resultsItem.data('place-id');
+      var resultsItemInnerHTML = resultsItem.html();
+      scheduleItemHTML = "<li class='schedule__list-item' data-place-id="+ resultItemPlaceID +">"+ resultsItemInnerHTML +"</li>";
       
-      if ($(this).hasClass('search-results__list-item-button--add')) {
-        var resultsItem = $(this).closest('.search-results__list-item');
-        var resultsItemInnerHTML = resultsItem.html();
-        var scheduleItemHTML = "<li class='schedule__list-item'>"+ resultsItemInnerHTML +"</li>";
-        
-        if (!$('.schedule').hasClass('schedule--filled')) {
-          $('.schedule').addClass('schedule--filled');
-        }
-        
-        $('.schedule__list').append(scheduleItemHTML);
-        resultsItem.addClass('hidden');
+      if (!$('.schedule').hasClass('schedule--filled')) {
+        $('.schedule').addClass('schedule--filled');
       }
       
-      if ($(this).hasClass('search-results__list-item-button--remove')) {
-        $(this).parent().remove();
-      }
+      modalObject = $('.modal');
+      modalObject.find('.modal__place').html(scheduleItemHTML);
+      modalObject.addClass('modal--open');
       
+      setTimeout(function(){
+        modalObject.addClass('modal--visible');
+      }, 10);
+    });
+  }
+  
+  function unbindRemoveButtons() {
+    $('.search-results__list-item-button--remove').off('click');
+  }
+  
+  function bindRemoveButtons() {
+    unbindRemoveButtons();
+    
+    $('.search-results__list-item-button--remove').on('click', function() {
+      var targetItem = $(this).closest('.schedule__list-item');
+      var targetOriginal = targetItem.data('place-id');
+      $('.search-results__list').find('[data-place-id="' + targetOriginal + '"]').removeClass('hidden');
+      targetItem.remove();
     });
   }
   
@@ -10332,7 +10348,32 @@ $(document).ready(function() {
     $('.schedule').removeClass('schedule--active');
   });
   
-  // $('search-input-field').click(function(){
-  //   geolocate();
-  // });
+  $('.modal__close').click(function() {
+    modalObject.addClass('modal--closed');
+    
+    setTimeout(function() {
+      modalObject.removeClass('modal--closed modal--visible modal--open');
+    }, 250);
+  });
+  
+  $('.modal__list-item-button').click(function() {
+    var targetDay = $(this).data('target-day');
+    resultsItem.addClass('hidden');
+    $('.schedule__list-day--'+ targetDay).append(scheduleItemHTML);
+    modalObject.addClass('modal--closed');
+    
+    setTimeout(function() {
+      modalObject.removeClass('modal--closed modal--visible modal--open');
+      
+      setTimeout(function() {
+        $('.search__schedule-button-inner').addClass('search__schedule-button-inner--pulse');
+        
+        setTimeout(function() {
+          $('.search__schedule-button-inner').removeClass('search__schedule-button-inner--pulse');
+        }, 1000);
+      }, 100);
+    }, 250);
+    
+    bindRemoveButtons();
+  });
 });

@@ -1,0 +1,56 @@
+// =============================================
+//							       THEME
+// =============================================
+
+$white: #FFF;
+$black: #000;
+
+$page-bg-color: white;
+$primary-color: #4A90E2;
+$primary-text-color: #222222;
+$selection-bg-color: lighten($primary-color, 40%);
+$border-color: #e0e0e0;
+$modal-bg-color: rgba(0,0,0,0.5);
+
+@import '../node_modules/flexwebcore/src/scss/flexwebcore/core/_all-core.scss';
+
+$root-font-family: 'Open Sans', sans-serif;
+$root-font-size: 16px;
+$root-line-height: 1.5;
+$root-background-color: white;
+$root-color: $primary-text-color;
+$selection-background-color: lighten($primary-color, 40%);
+$selection-color: false;
+
+@import "sanitize-css/sanitize.scss"; //available in bower_components
+
+html {
+  font-weight: 300;
+}
+
+html,
+body {
+  @include full-height;
+  @include font-light;
+}
+
+::selection {
+	background-color: $selection-bg-color; // sanitize override
+  color: $primary-text-color; // sanitize override
+}
+
+ul {
+  @include unstyled;
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+}
+
+.toolbar {
+  @include flex;
+  @include full-width;
+  padding: 0.5em;
+  height: 60px;
+}

@@ -32,17 +32,60 @@ html(lang='en')
             | Loading Restaurants
             
         button.search__schedule-button
-          i.fa.fa-calendar(aria-hidden="true")
-          | View Schedule
+          .search__schedule-button-inner
+            i.fa.fa-calendar(aria-hidden="true")
+            | View Schedule
           
-      .schedule
+      .schedule.schedule--filled
         .schedule__header.toolbar
           i.fa.fa-calendar.schedule__header-calendar(aria-hidden="true")
           .schedule__header-title Schedule
           button.schedule__header-close
-            i.fa.fa-close(aria-label="Close My Schedule")
-        .schedule__placeholder No schedule set
+            i.fa.fa-close(aria-label="Close Schedule")
+
         ul.schedule__list
+          .schedule__list-day.schedule__list-day--mon
+            .schedule__list-day-title Monday
+            //- .schedule__list-day-placeholder
+          .schedule__list-day.schedule__list-day--tues
+            .schedule__list-day-title Tuesday
+          .schedule__list-day.schedule__list-day--wed
+            .schedule__list-day-title Wednesday
+          .schedule__list-day.schedule__list-day--thur
+            .schedule__list-day-title Thursday
+          .schedule__list-day.schedule__list-day--fri
+            .schedule__list-day-title Friday
+          .schedule__list-day.schedule__list-day--sat
+            .schedule__list-day-title Saturday
+          .schedule__list-day.schedule__list-day--sun
+            .schedule__list-day-title Sunday
+            
+      .modal.modal--small
+        .modal__inner
+          header.modal__header
+            .modal__header-title Schedule this restaurant
+            button.modal__close
+              i.fa.fa-close(aria-label="Cancel scheduling")
           
+          .modal__place
+              
+          .modal__content
+            ul.modal__list
+              li.modal__list-item 
+                button.modal__list-item-button(data-target-day="mon") Monday
+              li.modal__list-item 
+                button.modal__list-item-button(data-target-day="tues") Tuesday
+              li.modal__list-item 
+                button.modal__list-item-button(data-target-day="wed") Wednesday
+              li.modal__list-item 
+                button.modal__list-item-button(data-target-day="thur") Thursday
+              li.modal__list-item 
+                button.modal__list-item-button(data-target-day="fri") Friday
+              li.modal__list-item 
+                button.modal__list-item-button(data-target-day="sat") Saturday
+              li.modal__list-item 
+                button.modal__list-item-button(data-target-day="sun") Sunday
+          
+      .modal-background
         
       script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyABMZNCMxM-b-CJsBAhKzNpzHhcCPIVF8Y&libraries=places')

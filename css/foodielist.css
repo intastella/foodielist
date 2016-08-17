@@ -273,10 +273,6 @@ button {
   outline: none;
 }
 
-.hidden {
-  display: none;
-}
-
 .toolbar {
   display: -ms-flexbox;
   display: flex;
@@ -415,22 +411,35 @@ button {
   margin-right: 0.5em;
 }
 
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    transform: scale3d(1.2, 1.2, 1.2);
+  }
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.search__schedule-button-inner--pulse {
+  animation-fill-mode: both;
+  animation: pulse 1s;
+}
+
 .search-results__list-item,
 .schedule__list-item {
   display: -ms-flexbox;
   display: flex;
   padding: 10px;
   border-top: 1px solid #e0e0e0;
+  background-color: #FFF;
 }
 
-.search-results__list-item:first-child,
-.schedule__list-item:first-child {
+.search-results__list-item:first-of-type,
+.schedule__list-item:first-of-type {
   border-top: 0;
-}
-
-.search-results__list-item:nth-child(odd),
-.schedule__list-item:nth-child(odd) {
-  background-color: #f7f7f7;
 }
 
 .search-results__list-item:nth-child(odd) .search-results__list-item-image,
@@ -503,16 +512,16 @@ button {
 }
 
 .search-results__list-item-schedule {
-  font-size: 0.75em;
-  line-height: 1.333333333;
+  font-size: 0.6875em;
+  line-height: 1.272727273;
   margin-top: 0.2em;
   color: #808080;
 }
 
 @media (min-width: 71.5em) {
   .search-results__list-item-schedule {
-    font-size: 0.875em;
-    line-height: 1.285714286;
+    font-size: 0.75em;
+    line-height: 1.333333333;
   }
 }
 
@@ -542,9 +551,12 @@ button {
   display: flex;
   -ms-flex-direction: column;
       flex-direction: column;
-  padding-left: 10px;
   -ms-flex-pack: center;
       justify-content: center;
+}
+
+.modal__place .search-results__list-item-action {
+  display: none;
 }
 
 .search-results__list-item-button {
@@ -567,8 +579,16 @@ button {
   background-color: #2275d7;
 }
 
+.schedule__list-item .search-results__list-item-button--add {
+  display: none;
+}
+
 .search-results__list-item-button--remove {
   display: none;
+}
+
+.schedule__list-item .search-results__list-item-button--remove {
+  display: block;
 }
 
 .search-results__list-item-button i {
@@ -584,9 +604,9 @@ button {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  background-color: #FFF;
   top: 0;
   left: 0;
-  background-color: #f7f7f7;
   transition: transform 0.25s ease-in-out;
   transform: translateY(100%);
 }
@@ -598,10 +618,9 @@ button {
 .schedule__header {
   display: -ms-flexbox;
   display: flex;
-  border-bottom: 1px solid #e0e0e0;
   background-color: #FFF;
-  font-size: 1.5em;
   color: #4A90E2;
+  font-size: 1.5em;
 }
 
 .schedule__header-calendar {
@@ -632,29 +651,204 @@ button {
   font-size: 1.3em;
 }
 
-.schedule__placeholder {
-  padding: 30px;
-  text-align: center;
-  color: #808080;
+.modal__place .schedule__list-item {
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #f7f7f7;
 }
 
-.schedule--filled .schedule__placeholder {
+.schedule__list-day {
+  min-height: 6.875em;
+}
+
+.schedule__list-day-title {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: 400;
+  font-size: 0.75em;
+  line-height: 1.333333333;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  background-color: #f7f7f7;
+}
+
+@media (min-width: 71.5em) {
+  .schedule__list-day-title {
+    font-size: 0.875em;
+    line-height: 1.285714286;
+  }
+}
+
+.modal-background {
+  position: fixed;
   display: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: all 0.25s ease-in-out;
+  z-index: 9998;
+  background: rgba(0, 0, 0, 0.5);
 }
 
-.schedule__list {
-  display: none;
-}
-
-.schedule--filled .schedule__list {
+.modal--open + .modal-background {
   display: block;
 }
 
-.schedule__list-item .search-results__list-item-button--add {
-  display: none;
+.modal--visible + .modal-background {
+  opacity: 1;
 }
 
-.schedule__list-item .search-results__list-item-button--remove {
+.modal--closed + .modal-background {
+  opacity: 0;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  z-index: 9999;
+}
+
+.modal--open {
   display: block;
+}
+
+.modal--inline {
+  position: relative;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  z-index: 1;
+}
+
+@media (min-width: 71.5em) {
+  .modal--inline {
+    margin-top: 120px;
+    margin-bottom: 120px;
+  }
+}
+
+.modal.modal--inline.modal--small {
+  max-width: 25em;
+}
+
+.modal__inner {
+  position: fixed;
+  overflow: hidden;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  top: 50%;
+  left: 50%;
+  max-width: 48em;
+  max-height: 96%;
+  width: 96%;
+  border-radius: 15px;
+  transition: all 0.25s cubic-bezier(0.68, 0, 0.265, 1.55);
+  transform: translate(-50%, -40%) scale(0.75);
+  background: #FFF;
+  box-shadow: 0 1px 0 0 #e1e5e8;
+  opacity: 0;
+  transform-origin: 50% 50%;
+}
+
+.modal--visible .modal__inner {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.modal--success .modal__inner {
+  transform: translate(-50%, -100%) scale(0.75) rotate(-15deg);
+  transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 0);
+  opacity: 0;
+}
+
+.modal--closed .modal__inner {
+  transform: translate(-50%, 0%) scale(0.75) rotate(-15deg);
+  transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 0);
+  opacity: 0;
+}
+
+@media (min-width: 48em) {
+  .modal--small .modal__inner {
+    max-width: 25em;
+  }
+}
+
+.modal__header {
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+  display: -ms-flexbox;
+  display: flex;
+  padding-left: 20px;
+  -ms-flex-pack: end;
+      justify-content: flex-end;
+}
+
+.modal__header-title {
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #383838;
+}
+
+.modal__content {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  position: relative;
+  padding-bottom: 30px;
+}
+
+.modal__close {
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+  position: relative;
+  margin-top: 10px;
+  margin-right: 20px;
+  color: #4A90E2;
+  width: 40px;
+  height: 55px;
+  z-index: 1;
+  outline: none;
+}
+
+.modal__close i {
+  font-size: 2em;
+}
+
+.modal__place {
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+  border-top: 1px solid #e0e0e0;
+}
+
+.modal__list {
+  border-top: 1px solid #e0e0e0;
+}
+
+.modal__list-item-button {
+  width: 100%;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  color: #4A90E2;
+  text-align: left;
+}
+
+.hidden {
+  display: none;
 }
 /*# sourceMappingURL=foodielist.css.map */

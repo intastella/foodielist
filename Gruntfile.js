@@ -58,7 +58,7 @@ module.exports = function(grunt) {
           expand: true,
           flatten: true,
           cwd: 'src/',
-          src: ['*.scss'],
+          src: ['foodielist.scss'],
           dest: 'css',
           ext: '.css'
         }]

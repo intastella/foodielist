@@ -1,0 +1,151 @@
+.modal-background {
+  @include fixed;
+  @include hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: all $default-transition;
+  z-index: 9998;
+  background: $modal-bg-color;
+  
+  .modal--open + & {
+    @include block;
+  }
+  
+  .modal--visible + & {
+    opacity: 1;
+  }
+  
+  .modal--closed + & {
+    opacity: 0;
+  }
+}
+
+.modal {
+  @include fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  @include hidden;
+  z-index: 9999;
+  
+  &--open {
+    @include block;
+  }
+  
+  &--inline {
+    @include relative;
+    @include center;
+    z-index: 1;
+    
+    @include breakpoint($large) {
+      @include xxlarge-gap-top;
+      @include xxlarge-gap-bottom;
+    }
+  }
+  
+  &.modal--inline.modal--small {
+    max-width: $modal-max-width-small;
+  }
+}
+
+.modal__inner {
+  @include fixed;
+  @include overflow-hidden;
+  @include flex;
+  @include flex-vertical;
+  top: 50%;
+  left: 50%;
+  max-width: unquote($modal-max-width-medium);
+  max-height: 96%;
+  width: 96%;
+  border-radius: 15px;
+  transition: all $default-duration $ease-in-to-bounce-back;
+  transform: translate(-50%, -40%) scale(0.75);
+  background: $white;
+  box-shadow: 0 1px 0 0 rgba(225,229,232,1);
+  opacity: 0;
+  transform-origin: 50% 50%;
+  
+  .modal--visible & {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  
+  .modal--success & {
+    transform: translate(-50%, -100%) scale(0.75) rotate(-15deg);
+    transition: all $default-duration $bounce-back-to-ease-out;
+    opacity: 0;
+  }
+  
+  .modal--closed & {
+    transform: translate(-50%, 0%) scale(0.75) rotate(-15deg);
+    transition: all $default-duration $bounce-back-to-ease-out;
+    opacity: 0;
+  }
+  
+  .modal--small & {
+    @include breakpoint($medium) {
+      max-width: $modal-max-width-small;
+    }
+  }
+}
+
+.modal__header {
+  @include flex-fixed;
+  @include flex;
+  @include double-pad-left;
+  justify-content: flex-end;
+}
+
+.modal__header-title {
+  @include flex-fluid;
+  @include double-gap-top;
+  @include double-gap-bottom;
+  font-size: 1.5em;
+  color: #383838;
+}
+
+.modal__content {
+  @include overflow-x-hidden-scroll-y;
+  @include full-width;
+  @include flex-fluid;
+  @include relative;
+  @include triple-pad-bottom;
+}
+
+.modal__close {
+  @include flex-fixed;
+  @include relative;
+  @include gap-top;
+  @include double-gap-right;
+  @include type-color-primary;
+  width: 40px;
+  height: 55px;
+  z-index: 1;
+  outline: none;
+  
+  i {
+    font-size: 2em;
+  }
+}
+
+.modal__place {
+  @include flex-fixed;
+  @include border-top;
+}
+
+.modal__list {
+  @include border-top;
+}
+
+.modal__list-item-button {
+  @include full-width;
+  @include padded(2);
+  @include border-bottom;
+  @include type-color-primary;
+  @include align-left;
+}
