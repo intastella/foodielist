@@ -252,6 +252,11 @@ body {
   font-weight: 300;
 }
 
+html.modal-open,
+body.modal-open {
+  overflow: hidden;
+}
+
 ::-moz-selection {
   background-color: #fafcfe;
   color: #222222;

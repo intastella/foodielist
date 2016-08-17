@@ -251,6 +251,8 @@ $(document).ready(function() {
       modalObject = $('.modal');
       modalObject.find('.modal__place').html(scheduleItemHTML);
       modalObject.addClass('modal--open');
+      modalObject.find('.modal__content').focus();
+      $('body').addClass('modal-open');
       
       setTimeout(function(){
         modalObject.addClass('modal--visible');
@@ -273,41 +275,47 @@ $(document).ready(function() {
     });
   }
   
+  function closeModal() {
+    modalObject.addClass('modal--closed');
+    
+    $('.search-results__list').focus();
+    $('body').removeClass('modal-open');
+    
+    setTimeout(function() {
+      modalObject.removeClass('modal--closed modal--visible modal--open');
+    }, 250);
+  }
+  
   geolocate();
   initAutocomplete();
   
   $('.search__schedule-button').click(function() {
     $('.schedule').addClass('schedule--active');
+    $('.schedule').find('.schedule__list').focus();
   });
   
   $('.schedule__header-close').click(function() {
     $('.schedule').removeClass('schedule--active');
+    $('.search-results__list').focus();
   });
   
   $('.modal__close').click(function() {
-    modalObject.addClass('modal--closed');
-    
-    setTimeout(function() {
-      modalObject.removeClass('modal--closed modal--visible modal--open');
-    }, 250);
+    closeModal();
   });
   
   $('.modal__list-item-button').click(function() {
     var targetDay = $(this).data('target-day');
     resultsItem.addClass('hidden');
     $('.schedule__list-day--'+ targetDay).append(scheduleItemHTML);
-    modalObject.addClass('modal--closed');
     
+    closeModal();
+      
     setTimeout(function() {
-      modalObject.removeClass('modal--closed modal--visible modal--open');
+      $('.search__schedule-button-inner').addClass('search__schedule-button-inner--pulse');
       
       setTimeout(function() {
-        $('.search__schedule-button-inner').addClass('search__schedule-button-inner--pulse');
-        
-        setTimeout(function() {
-          $('.search__schedule-button-inner').removeClass('search__schedule-button-inner--pulse');
-        }, 1000);
-      }, 100);
+        $('.search__schedule-button-inner').removeClass('search__schedule-button-inner--pulse');
+      }, 1000);
     }, 250);
     
     bindRemoveButtons();

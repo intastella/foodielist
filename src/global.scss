@@ -32,6 +32,10 @@ html,
 body {
   @include full-height;
   @include font-light;
+  
+  &.modal-open {
+    @include overflow-hidden;
+  }
 }
 
 ::selection {
