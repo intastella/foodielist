@@ -51,7 +51,7 @@ $(document).ready(function() {
     var defaultMap = new google.maps.Map(document.getElementById('map'), {
       center: geolocation,
       zoom: 15,
-      disableDefaultUI: true
+      // disableDefaultUI: true
     });
     
     initSearch(geolocation);
@@ -76,13 +76,13 @@ $(document).ready(function() {
     
     searchMap = new google.maps.Map(document.getElementById('map'), {
       center: LatLng,
-      zoom: 10,
-      disableDefaultUI: true
+      zoom: 15,
+      // disableDefaultUI: true
     });
     
     var searchRequest = {
       location: LatLng,
-      radius: '10000',
+      radius: '8046',
       type: 'restaurant'
     };
     
@@ -116,17 +116,9 @@ $(document).ready(function() {
   
   function displayResults(place, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
+      var photo = "<i class='fa fa-camera search-results__list-item-image-icon'></i>";
       var name = "Name not available";
       var rating = "Rating not available";
-      var photo = "<i class='fa fa-camera search-results__list-item-image-icon'></i>";
-      
-      if (place.name !== undefined) {
-        name = place.name;
-      }
-      
-      if (place.rating !== undefined) {
-        rating = place.rating;
-      }
       
       if (place.photos !== undefined) {
         var photoURL = place.photos[0].getUrl({ 'maxWidth': 130, 'maxHeight': 130 });
@@ -134,6 +126,27 @@ $(document).ready(function() {
         if (photoURL !== undefined) {
           photo = "<img src='"+ photoURL +"'>";
         }
+      }
+      
+      if (place.name !== undefined) {
+        name = place.name;
+      }
+      
+      if (place.rating !== undefined) {
+        var rawRating = place.rating;
+        var roundedRating = (Math.round(rawRating * 2) / 2).toFixed(1);
+        var ratingDigits = roundedRating.split(".");
+        var wholeStars = "";
+        var halfStars = "";
+        console.log(ratingDigits[0] + " " + ratingDigits[1]);
+        // console.log(ratingDigits[1]);
+        for (var w = 0; w < ratingDigits[0]; w++) {
+          wholeStars += "<i class='fa fa-star' aria-hidden='true'></i>";
+        }
+        if (ratingDigits[1] !== 0) {
+          halfStars += "<i class='fa fa-star-half' aria-hidden='true'></i>";
+        }
+        rating = wholeStars + halfStars;
       }
       
       var schedule = "Open: ";
